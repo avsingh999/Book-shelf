@@ -15,7 +15,11 @@ const { auth } = require('./middleware/auth')
 app.use(bodyParse.json())
 app.use(cookieParser())
 
-
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 // GET
 app.get('/api/auth', auth, (req, res)=>{
@@ -55,7 +59,6 @@ app.get('/api/books', (req, res)=>{
     })
 })
 // Post 
-
 app.post('/api/book', (req, res)=>{
     const book = new Book(req.body)
 
@@ -179,7 +182,7 @@ app.delete('/api/delete_book', (req, res) => {
 
 
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 app.listen(port, ()=>{
     console.log('\n')
