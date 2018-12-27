@@ -71,6 +71,7 @@ app.post('/api/book', (req, res)=>{
     })
 })
 
+
 app.post('/api/register', (req, res)=> {
     const user = new User(req.body);
     console.log("*** check ********")
@@ -84,7 +85,7 @@ app.post('/api/register', (req, res)=> {
     })
 })
 
-app.get('/api/login', (req, res)=>{
+app.post('/api/login', (req, res)=>{
     User.findOne({'email':req.body.email}, (err, user)=>{
         if(!user) return res.json({isAuth:false, message:"Auth faild not found"})
         user.comparePassword(req.body.password, (err, isMatch)=>{
@@ -163,18 +164,6 @@ app.delete('/api/delete_book', (req, res) => {
 
 
 // 
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
