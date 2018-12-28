@@ -29,6 +29,7 @@ export function getBookWReviewer(id){
     return (dispatch) => {
         request.then(({data})=>{
             let book = data;
+            console.log(book.ownerId)
             axios.get(`http://localhost:5001/api/getReviewer?id=${book.ownerId}`)
             .then(({data})=>{
                 let response = {
@@ -136,5 +137,48 @@ export function deleteBook(id){
         return {
             type:'DELETE_BOOK',
             payload:request
+        }
+}
+
+
+export function clearBook(id){
+
+        
+        return {
+            type:'CLEAR_BOOK',
+            payload:{
+                book:null,
+                updateBook:false,
+                postDeleted:false
+            }
+        }
+}
+
+
+export function getUsers(){
+    const request = axios.get(`http://localhost:5001/api/users`)
+                    .then(response => response.data)
+
+        return {
+            type:'GET_USER',
+            payload:request
+        }
+}
+
+export function userRegister(user, userList){
+    const request = axios.post(`http://localhost:5001/api/register`,user)
+
+        return (dispatch) => {
+            request.then(({data})=>{
+                let user = data.success ? [...userList, data.user] : userList
+                let response = {
+                    success:data.success,
+                    user
+                }
+                dispatch({
+                    type:'USER_REGISTER',
+                    payload:response
+                })
+            })
         }
 }

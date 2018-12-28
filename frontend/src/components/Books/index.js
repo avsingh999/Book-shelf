@@ -48,7 +48,6 @@ class Books extends Component {
     // console.log(books)
     return (
       <div>
-          {/* sdsd */}
           {this.renderBook(books)}
       </div>
     )

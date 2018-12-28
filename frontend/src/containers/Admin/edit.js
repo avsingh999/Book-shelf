@@ -36,6 +36,9 @@ class edit extends React.PureComponent {
 	componentWillMount(){
 		this.props.dispatch(getBook(this.props.match.params.id))
 	}
+	componentWillUnmount(){
+		this.props.dispatch(clearBook())
+	}
 	componentWillReceiveProps(nextParams){
 		let book  = nextParams.books.book;
 		// console.log(book.)

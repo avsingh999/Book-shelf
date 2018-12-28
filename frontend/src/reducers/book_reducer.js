@@ -4,6 +4,8 @@ export default function(state={}, action){
             return {...state, list:action.payload}
 
         case 'GET_BOOK_W_REVIEWER':
+        console.log(action.payload)
+        
             return {...state,
                  book:action.payload.book,
                  reviewer:action.payload.reviewer 
@@ -34,6 +36,12 @@ export default function(state={}, action){
        case 'DELETE_BOOK':
             return {...state,
                 postDeleted:action.payload
+        }
+       case 'CLEAR_BOOK':
+            return {...state,
+                book:action.payload.book,
+                updateBook:action.payload.updateBook,
+                postDeleted:action.payload.postDeleted
         }
         default:
             return state
