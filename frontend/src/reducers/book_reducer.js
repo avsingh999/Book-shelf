@@ -9,11 +9,32 @@ export default function(state={}, action){
                  reviewer:action.payload.reviewer 
             }
         case 'CLEAR_BOOK_W_REVIEWER':
-        return {...state,
-            book:action.payload.book,
-            reviewer:action.payload.reviewer 
+            return {...state,
+                book:action.payload.book,
+                reviewer:action.payload.reviewer 
+            }
+        case 'ADD_BOOK':
+            return {...state,
+                newbook:action.payload
+            }
+        case 'CLEAR_NEWBOOK':
+            return {...state,
+                newbook:action.payload
+            } 
+       case 'GET_BOOK':
+            return {...state,
+                book:action.payload
         }
 
+       case 'UPDATE_BOOK':
+            return {...state,
+                book:action.payload.doc,
+                updateBook:action.payload.success
+        }
+       case 'DELETE_BOOK':
+            return {...state,
+                postDeleted:action.payload
+        }
         default:
             return state
     }

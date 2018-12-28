@@ -15,11 +15,29 @@ const { auth } = require('./middleware/auth')
 app.use(bodyParse.json())
 app.use(cookieParser())
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+var cors = require('cors')
+
+// app.use(function(req, res, next) {
+//   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+//   res.header('Access-Control-Allow-Credentials', true);
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
+app.use(cors({
+  credentials: true,
+  origin:'http://localhost:3000'
+}))
+// var xhr = new XMLHttpRequest();
+// xhr.open('POST', 'http://localhost:3000/', true);
+// xhr.withCredentials = true;
+// xhr.send(null);
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+// res.header("Access-Control-Allow-Credentials","true")
+
+//     res.header("Access-Control-Allow-Headers", "*");
+//     next();
+//   });
 
 // GET
 app.get('/api/auth', auth, (req, res)=>{
@@ -60,8 +78,9 @@ app.get('/api/books', (req, res)=>{
 })
 // Post 
 app.post('/api/book', (req, res)=>{
+    console.log(req.body)
     const book = new Book(req.body)
-
+console.log(book)
     book.save((err, doc)=>{
         if(err) return res.status(400).send(err)
         res.status(200).json({
@@ -74,8 +93,6 @@ app.post('/api/book', (req, res)=>{
 
 app.post('/api/register', (req, res)=> {
     const user = new User(req.body);
-    console.log("*** check ********")
-    console.log(user)
     user.save((err, doc) => {
         if(err) return res.json({success:false})
         res.status(200).json({
@@ -127,7 +144,8 @@ app.get('/api/users', (req, res)=>{
 
 
 app.get('/api/user_posts', (req, res) => {
-    Book.find({qwnerId:req.query.user}).exec((err, doc)=>{
+
+    Book.find({ownerId:req.query.user}).exec((err, doc)=>{
         if(err) return res.status(400).send(err)
         res.send(doc)
     })
@@ -148,7 +166,7 @@ app.post('/api/book_update', (req, res)=>{
 
 // DELETE
 
-app.delete('/api/delete_book', (req, res) => {
+app.delete('/api/delete_book                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ', (req, res) => {
     let id = req.query.id;
     Book.findByIdAndRemove(id, (err, doc) => {
         if(err) return res.status(400).send(err)
