@@ -27,17 +27,6 @@ app.use(cors({
   credentials: true,
   origin:'http://localhost:3000'
 }))
-// var xhr = new XMLHttpRequest();
-// xhr.open('POST', 'http://localhost:3000/', true);
-// xhr.withCredentials = true;
-// xhr.send(null);
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-// res.header("Access-Control-Allow-Credentials","true")
-
-//     res.header("Access-Control-Allow-Headers", "*");
-//     next();
-//   });
 
 // GET
 app.get('/api/auth', auth, (req, res)=>{
@@ -49,7 +38,7 @@ app.get('/api/auth', auth, (req, res)=>{
         lastname:req.user.lastname
     })
 })
-app.get('/api/logout', auth, (req, res)=> {
+app.get('/api/logout',auth,(req, res) => {
     req.user.deleteToken(req.token, (err, user)=>{
         if(err) return res.status(400).send(err);
         res.sendStatus(200)
